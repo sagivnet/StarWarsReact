@@ -15,7 +15,10 @@ export const Home = () => {
             <ul>
                 {films.map((film, index) =>{
                     let i = index +1;
-                    return <li className="line" key={film.episode_id}><Link to={"films/"+i}> {film.title} </Link></li>
+                    return <li className="line" style={{}} key={film.episode_id}>
+                            <Link to={"films/"+i}> {film.title} </Link>
+                            <p>asdsa</p>
+                        </li>
                 })}
             </ul>
         </div>

@@ -1,8 +1,10 @@
 import {get} from '../api/swapi.dev.server';
 import { Link, useLocation ,withRouter} from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/core";
 
-export const Description = withRouter( () => {
+export const Description =  () => {
     
     const location = useLocation().pathname;
     const path = location.substring(1,location.lastIndexOf('/'));
@@ -12,6 +14,13 @@ export const Description = withRouter( () => {
     const [data, setData] = useState({});
     const [dataStrings, setDataStrings] = useState([]);
     const [dataLinks, setDataLinks] = useState([]);
+
+    const [doneLoading, setDoneLoading] = useState(false);
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        border-color: red;
+`;
 
     const regulateCategory = category => {
         switch(category){
@@ -35,6 +44,7 @@ export const Description = withRouter( () => {
         setData({});
         setDataStrings([]);
         setDataLinks([]);
+        setDoneLoading(false);
         
         get(url).then(res => {
             const results = res.data;
@@ -45,7 +55,9 @@ export const Description = withRouter( () => {
 
         switch(typeof value) {
 
-            case 'number':  break; // id
+            case 'number':  // id
+                setDataStrings(dataStrings => [...dataStrings, {key, value}]);
+                break; 
             case 'object': // link array
 
               let arr = [];
@@ -67,14 +79,12 @@ export const Description = withRouter( () => {
                     })
                     .catch(err => {
                         console.log(err);
-                        // this.router.navigate(['/error','server_connection_error']);
                         }) 
               }
 
             
               break;
-              
-            case 'string': 
+              case 'string' : 
               if (key === 'title' || key === 'name'|| key === 'url' ) break;
   
               if(value.search('http') !== -1){ // single link
@@ -111,6 +121,7 @@ export const Description = withRouter( () => {
         }
         setData(results);
         setDataStrings(dataStrings =>[...dataStrings, ...strings]);
+        setDoneLoading(true);
         
            
         }).catch(err => console.log(err));
@@ -129,7 +140,9 @@ export const Description = withRouter( () => {
 
 
     
-    return <>
+    return (
+        !doneLoading?  <ClipLoader css={override} loading={!doneLoading}  size={150} /> :
+        <>
         <h2>  <i> {data.name? formatTitle(data.name) : formatTitle(data.title)} </i></h2>
     
         <ul>
@@ -147,5 +160,5 @@ export const Description = withRouter( () => {
             })}
         </ul>
     </>
-
-})
+    )
+}
