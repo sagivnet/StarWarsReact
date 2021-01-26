@@ -57,7 +57,6 @@ export const Description = withRouter( () => {
                         let url = result.data.url;
                         url = url.substring(0,url.lastIndexOf('/'))
                         let id = url.substring(url.lastIndexOf('/')+1);
-                        console.log(url,id)
                         arr.push({title: result.data.name?result.data.name:result.data.title?result.data.title:'null' , id});
 
                         if(i === value.length -1){
@@ -80,7 +79,10 @@ export const Description = withRouter( () => {
   
               if(value.search('http') !== -1){ // single link
                 get(value).then(result => {
-                  setDataLinks(dataLinks => [...dataLinks, {key, value: [{title: result.data.name?result.data.name:result.data.title?result.data.title:'null' , id}]}]);
+                    let url = result.data.url;
+                    url = url.substring(0,url.lastIndexOf('/'))
+                    let id = url.substring(url.lastIndexOf('/')+1);
+                    setDataLinks(dataLinks => [...dataLinks, {key, value: [{title: result.data.name?result.data.name:result.data.title?result.data.title:'null' , id}]}]);
                 })
                 .catch(err => {
                   console.log(err);
