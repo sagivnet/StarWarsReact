@@ -15,7 +15,7 @@ export const Description = withRouter( () => {
 
     const regulateCategory = category => {
         switch(category){
-            case 'characters' || 'residents' || 'pilots':
+            case 'characters' :
                 return 'people';
             case  'residents':
                 return 'people';
@@ -76,7 +76,7 @@ export const Description = withRouter( () => {
               break;
               
             case 'string': 
-              if (key === 'title' || key === 'url' ) break;
+              if (key === 'title' || key === 'name'|| key === 'url' ) break;
   
               if(value.search('http') !== -1){ // single link
                 get(value).then(result => {
@@ -122,11 +122,6 @@ export const Description = withRouter( () => {
     }, [useLocation()])
 
    
-    // useEffect = (()=>{
-    // //     const path = location.substring(1,location.lastIndexOf('/'));
-    // //     const id = location.substring(location.lastIndexOf('/')+1);
-
-    // },[]);
     const formatTitle = title => {
         if (!title) return "";
         var splitStr =  title.replace(/_/g, " ").toLowerCase().split(' ');
@@ -136,35 +131,25 @@ export const Description = withRouter( () => {
        return splitStr.join(' '); 
       }
 
-    // const renderLinks = links => {
-    //     return links.map(l => {
-    //         return <li  key={l}> <a>{l}</a>  </li>
-    //     });
-    // }
+
     
     return <>
-        <h2> {formatTitle(data.title)} </h2>
+        <h2>  <i> {data.name? formatTitle(data.name) : formatTitle(data.title)} </i></h2>
     
         <ul>
             {dataStrings.map((s) => {
-                return <li className="task" key={s.key}><h3> {formatTitle(s.key)}</h3> {s.value}</li>
+                return <li className="line" key={s.key}><h3> {formatTitle(s.key)}</h3> {s.value}</li>
             })}
              {dataLinks.map(category => {
-                return <li className="task" key={category.key}>
-                        <h3> {formatTitle(category.key)} </h3>
-                    
-                        <ul>
-                            {/* {console.log(dataLinks)}
-                            {console.log(dataLinks.find(x => x.key === category.key).value[0])} */}
+                return <li className="line" key={category.key}>
 
-                            {/* {dataLinks.find(x => x.key === category.key).value.map(l => console.log(l))} */}
+                        <h3> {formatTitle(category.key)} </h3>
+                        <ul>
                             {category.value.map(l => <li  key={l.title+l.id}> <Link to={'/'+regulateCategory(category.key)+'/'+l.id} > {l.title} </Link>  </li>)}
-                            {/* {category.value.map(l => <h4  > {l} </h4>)} */}
-                        {/* <li className="task" key={l.key}><h3> {formatTitle(l.key)}</h3> {l.name}</li> */}
                         </ul>
                 </li>
             })}
         </ul>
     </>
-    // <span>{data.title ? data.title : null}</span>
+
 })

@@ -16,8 +16,8 @@ export const Home = () => {
             <ul>
                 {films.map((film, index) =>{
                     let i = index +1;
-                    // return <li onClick={()=>console.log(film)} className="task" key={film.episode_id}> {film.title} </li>
-                    return <li className="task" key={film.episode_id}><Link to={"films/"+i}> {film.title} </Link></li>
+                    // return <li onClick={()=>console.log(film)} className="line" key={film.episode_id}> {film.title} </li>
+                    return <li className="line" key={film.episode_id}><Link to={"films/"+i}> {film.title} </Link></li>
                 })}
             </ul>
         </div>
