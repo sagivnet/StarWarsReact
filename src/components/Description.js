@@ -80,14 +80,10 @@ export const Description = withRouter( () => {
   
               if(value.search('http') !== -1){ // single link
                 get(value).then(result => {
-                //   setDataLinks([...dataLinks,{key, value: [result.data]}])
-
-                //   links.push({key, value: [{title: result.data.name?result.data.name:result.data.title?result.data.title:'null' , id}]});
                   setDataLinks(dataLinks => [...dataLinks, {key, value: [{title: result.data.name?result.data.name:result.data.title?result.data.title:'null' , id}]}]);
                 })
                 .catch(err => {
                   console.log(err);
-                //   this.router.navigate(['/error','server_connection_error']);
                 }) 
                 break; 
               }
@@ -100,13 +96,11 @@ export const Description = withRouter( () => {
                 // date format
                 date = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
                 // update state
-                // setDataStrings([...dataStrings,{key, value:date}])
                 strings.push({key, value:date});
 
               } else { // not a date
                 // update state
                 strings.push({key, value});
-                // setDataStrings([...dataStrings,{key, value}])
               }   
               break;
             default: break;
