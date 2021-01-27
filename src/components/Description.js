@@ -57,6 +57,7 @@ export const Description =  () => {
                 break; 
 
             case 'object': // link array
+            if(!value) continue;
               let arr = [];
 
               for (let i=0; i< value.length; i++){
@@ -70,7 +71,7 @@ export const Description =  () => {
 
                         if(i === value.length -1){ // last item
                             links.push({key, value: arr});
-                            setDataLinks(dataLinks=> [...dataLinks, {key, value: arr}]);
+                            setDataLinks(dataLinks=> dataLinks.find(dl=> dl.key===key)?dataLinks: [...dataLinks, {key, value: arr}]);
                         }
                           
                     })
