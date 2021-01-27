@@ -43,13 +43,13 @@ body {
   font-size: 15px;
   font-family: inherit;
 }
-.like:active {
-  transform: scale(1.08);
-}
+
 .like:hover {
   transform: scale(1.08);
 }
-
+.like:active {
+  transform: scale(1.28);
+}
 .btn:focus {
   outline: none;
 }
