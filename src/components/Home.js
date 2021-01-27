@@ -1,19 +1,15 @@
 import {get} from '../api/swapi.dev.server';
 import { useEffect, useState } from 'react';
-import ClipLoader from "react-spinners/ClipLoader";
-import { css } from "@emotion/core";
+
 import { Link} from 'react-router-dom'
 import { MdFavorite , MdFavoriteBorder} from 'react-icons/md';
 import Cookies from 'universal-cookie';
+import useSpinnerLoader from '../hooks/useSpinnerLoader';
 
 export const Home = () => {
     
-    const [doneLoading, setDoneLoading] = useState(false); //TODO: Hook
-    const override = css`//TODO: Hook
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-    `;
+    const [renderSpinner, setDoneLoading] = useSpinnerLoader();
+
     const [films, setFilms] = useState([]);
     
     const cookies = new Cookies();
@@ -46,7 +42,7 @@ export const Home = () => {
     
     return (
         <div>
-            <ClipLoader css={override} loading={!doneLoading}  size={150} />
+            {renderSpinner()}
             <ul>
                 {films.map((film, index) =>{
                     let i = index +1;
@@ -56,7 +52,7 @@ export const Home = () => {
                              <MdFavorite className='like' onClick={()=>{likeEvent(film)}} size={30} color='red'/> 
                              :film.like == 1?
                              <MdFavoriteBorder className='like' onClick={()=>{likeEvent(film)}} size={30} color='red'/>
-                             :<MdFavoriteBorder className='like' onClick={()=>{likeEvent(film)}} size={30} color='black'/>
+                             :<MdFavoriteBorder className='like' onClick={()=>{likeEvent(film)}} size={30} color='grey'/>
                             
                             }
                           

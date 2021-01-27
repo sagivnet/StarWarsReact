@@ -1,8 +1,7 @@
 import {get} from '../api/swapi.dev.server';
 import { Link, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
-import ClipLoader from "react-spinners/ClipLoader";
-import { css } from "@emotion/core";
+import useSpinnerLoader from '../hooks/useSpinnerLoader';
 
 export const Description =  () => {
     
@@ -15,12 +14,7 @@ export const Description =  () => {
     const [dataStrings, setDataStrings] = useState([]);
     const [dataLinks, setDataLinks] = useState([]);
 
-    const [doneLoading, setDoneLoading] = useState(false); //TODO: Hook
-    const override = css`
-        display: block;
-        margin: 0 auto;
-        border-color: red;
-`;
+    const [renderSpinner, setDoneLoading, hideSpinner] = useSpinnerLoader();
 
     const regulateCategory = category => {
         switch(category){
@@ -141,7 +135,7 @@ export const Description =  () => {
 
     
     return (
-        !doneLoading?  <ClipLoader css={override} loading={!doneLoading}  size={150} /> :
+        !hideSpinner?  renderSpinner() :
         <>
         <h2>  <i> {data.name? formatTitle(data.name) : formatTitle(data.title)} </i></h2>
     
