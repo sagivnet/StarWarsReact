@@ -17,11 +17,11 @@ export const Home = () => {
     const likeEvent = film => {
 
         if(!film.like ){ // not liked yet
-            film.like = 2; // set to like
-          } else if (film.like == 2) { //  like
-            film.like = 1 ;  // set to dislike
+            film.like = '2'; // set to like
+          } else if (film.like === '2') { //  like
+            film.like = '1' ;  // set to dislike
           } else { // dislike
-            film.like = 2; //set to like
+            film.like = '2'; //set to like
           }
 
         cookies.set(film.episode_id, film.like)
@@ -38,6 +38,7 @@ export const Home = () => {
             }));
             setDoneLoading(true);
         }).catch(err => console.log(err));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     
     return (
@@ -46,11 +47,11 @@ export const Home = () => {
             <ul>
                 {films.map((film, index) =>{
                     let i = index +1;
-                    return <li className="row_line" cl style={{}} key={film.episode_id}>
+                    return <li className="row_line"  style={{}} key={film.episode_id}>
                             <Link className='link' to={"films/"+i}> {film.title} </Link>
-                            {film.like == 2?
+                            {film.like? film.like === '2'?
                              <MdFavorite className='like' onClick={()=>{likeEvent(film)}} size={30} color='red'/> 
-                             :film.like == 1?
+                             :
                              <MdFavoriteBorder className='like' onClick={()=>{likeEvent(film)}} size={30} color='red'/>
                              :<MdFavoriteBorder className='like' onClick={()=>{likeEvent(film)}} size={30} color='grey'/>
                             

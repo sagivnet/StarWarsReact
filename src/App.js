@@ -3,7 +3,6 @@ import { Header } from './components/Header';
 import { Home } from './components/Home';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import { Description } from './components/Description';
-import { ErrorPage } from './components/ErrorPage';
 
 function App() {
   return (
@@ -18,7 +17,6 @@ function App() {
               <Route path='/starships/:id' component={Description} />
               <Route path='/vehicles/:id' component={Description} />
               <Route path='/species/:id' component={Description} />
-              {/* <Route path='/error'  component={ErrorPage} /> */}
               <Redirect strict from="/" to="/films"/>
           </Switch>
         </div>
