@@ -155,7 +155,7 @@ export const Description =  () => {
 
                         <h3> {formatTitle(category.key)} </h3>
                         <ul>
-                            {category.value.map(l => <li className='link' key={l.title+l.id}> <Link to={'/'+regulateCategory(category.key)+'/'+l.id} > {l.title} </Link>  </li>)}
+                            {category.value.map(l => <li className='link' key={l.title+l.id}> <Link className='link' to={'/'+regulateCategory(category.key)+'/'+l.id} > {l.title} </Link>  </li>)}
                         </ul>
                 </li>
             })}

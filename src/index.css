@@ -15,7 +15,6 @@ body {
   margin: 30px auto;
   overflow: auto;
   min-height: 300px;
-  /* border: 1px solid steelblue; */
   padding: 30px;
   border-radius: 5px;
 }
@@ -25,7 +24,6 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  /* border: 1px solid steelblue; */
   padding: 30px;
   margin: 1px;
   border-radius: 10px;
@@ -45,16 +43,12 @@ body {
   font-size: 15px;
   font-family: inherit;
 }
+.like:active {
+  transform: scale(1.08);
+}
 .like:hover {
   transform: scale(1.08);
-  /* color: khaki; */
 }
-.like:active {
-  transform: scale(1.28);
-}
-/* .row_line:hover {
-  transform: scale(1.009);
-  /* color: khaki; */
 
 .btn:focus {
   outline: none;
@@ -72,13 +66,8 @@ body {
 .line {
   background: #f4f4f4;
   margin: 5px;
-  /* padding: 10px 20px; */
   padding: 15px;
-  cursor: pointer;
   border-radius: 5px;
-  /* float: left; */
-  /* width: 30%; */
-  /* min-height: 100%; */
 }
 
 .row_line {
@@ -88,20 +77,16 @@ body {
   background: #f4f4f4;
   margin: 5px;
   padding: 10px 20px;
-  cursor: pointer;
   border-radius: 5px;
 }
 
 .link {
-  /* display: flex; */
-  /* justify-content: space-between; */
-  /* align-items: flex-end; */
-  /* float: right; */
-  /* padding: 2px; */
-  margin: 6px;
-  /* padding-left: 70%; */
   display: inline-block;
-  /* background-color: violet; */
+  text-decoration: none;
+  padding: 2px;
+  margin: 2px;
+  border-radius: 10px;
+  width: 250px;
 }
 
 .line h3 {
@@ -117,22 +102,11 @@ h2 {
   color: rgb(139, 82, 8);
   background-color: bisque;
 }
-
 /* 
 footer {
   margin-top: 30px;
   text-align: center;
 } */
-
-.container ul .line {
-  /* background-color: rgb(233, 192, 192); */
-  /* float: left; */
-  /* max-width: 250px; */
-  /* min-height: 100px; */
-}
-.container ul .line * {
-  /* background-color: darkred; */
-}
 
 h1 {
   color: white;
@@ -143,7 +117,3 @@ h3 {
 ul {
   list-style-type: none;
 }
-
-/* ul li ul li {
-  
-} */

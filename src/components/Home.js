@@ -51,7 +51,7 @@ export const Home = () => {
                 {films.map((film, index) =>{
                     let i = index +1;
                     return <li className="row_line" cl style={{}} key={film.episode_id}>
-                            <Link to={"films/"+i}> {film.title} </Link>
+                            <Link className='link' to={"films/"+i}> {film.title} </Link>
                             {film.like == 2?
                              <MdFavorite className='like' onClick={()=>{likeEvent(film)}} size={30} color='red'/> 
                              :film.like == 1?
