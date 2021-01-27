@@ -20,7 +20,11 @@ function useSpinnerLoader(next) {
         setHideSpinner(state);
     };
 
-      return [renderSpinner, setDoneLoading, hideSpinner];
+    const doneLoading = () => {
+        return hideSpinner;
+    }
+
+      return [renderSpinner, setDoneLoading, doneLoading];
 
 };
 

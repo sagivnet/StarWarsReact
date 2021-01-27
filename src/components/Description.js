@@ -8,15 +8,15 @@ export const Description =  () => {
     const location = useLocation().pathname;
     const path = location.substring(1,location.lastIndexOf('/'));
     const id = location.substring(location.lastIndexOf('/')+1);
-    const url = 'https://swapi.dev/api/'+ path +'/'+id+'/'; // TODO: change
+    const url = 'https://swapi.dev/api/'+ path +'/'+id+'/';
 
     const [data, setData] = useState({});
     const [dataStrings, setDataStrings] = useState([]);
     const [dataLinks, setDataLinks] = useState([]);
 
-    const [renderSpinner, setDoneLoading, hideSpinner] = useSpinnerLoader();
+    const [renderSpinner, setDoneLoading, doneLoading] = useSpinnerLoader();
 
-    const regulateCategory = category => {
+    const formatCategory = category => {
         switch(category){
             case 'characters' :
                 return 'people';
@@ -34,17 +34,20 @@ export const Description =  () => {
     
 
     useEffect(() => {
-
+        let mounted = true;
+        // state cleanup
         setData({});
         setDataStrings([]);
         setDataLinks([]);
         setDoneLoading(false);
         
         get(url).then(res => {
+            if(!mounted) return;
             const results = res.data;
             let strings = [];
             let links = [];
 
+        // extract data
         for (const [key, value] of Object.entries(results)){
 
         switch(typeof value) {
@@ -52,8 +55,8 @@ export const Description =  () => {
             case 'number':  // id
                 setDataStrings(dataStrings => [...dataStrings, {key, value}]);
                 break; 
-            case 'object': // link array
 
+            case 'object': // link array
               let arr = [];
 
               for (let i=0; i< value.length; i++){
@@ -63,9 +66,9 @@ export const Description =  () => {
                         let url = result.data.url;
                         url = url.substring(0,url.lastIndexOf('/'))
                         let id = url.substring(url.lastIndexOf('/')+1);
-                        arr.push({title: result.data.name?result.data.name:result.data.title?result.data.title:'null' , id});
+                        arr.push( { title: result.data.name? result.data.name : result.data.title ? result.data.title : 'null' , id } );
 
-                        if(i === value.length -1){
+                        if(i === value.length -1){ // last item
                             links.push({key, value: arr});
                             setDataLinks(dataLinks=> [...dataLinks, {key, value: arr}]);
                         }
@@ -75,11 +78,10 @@ export const Description =  () => {
                         console.log(err);
                         }) 
               }
-
-            
               break;
+
               case 'string' : 
-              if (key === 'title' || key === 'name'|| key === 'url' ) break;
+              if (key === 'title' || key === 'name'|| key === 'url' ) break; // ignore
   
               if(value.search('http') !== -1){ // single link
                 get(value).then(result => {
@@ -109,16 +111,21 @@ export const Description =  () => {
                 strings.push({key, value});
               }   
               break;
+
             default: break;
           }
-
         }
+
+        // update state
         setData(results);
         setDataStrings(dataStrings =>[...dataStrings, ...strings]);
         setDoneLoading(true);
-        
            
         }).catch(err => console.log(err));
+
+        return function cleanup() {
+            mounted = false;
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [useLocation()])
 
@@ -135,7 +142,7 @@ export const Description =  () => {
 
     
     return (
-        !hideSpinner?  renderSpinner() :
+        !doneLoading()?  renderSpinner() :
         <>
         <h2>  <i> {data.name? formatTitle(data.name) : formatTitle(data.title)} </i></h2>
     
@@ -149,7 +156,7 @@ export const Description =  () => {
 
                         <h3> {formatTitle(category.key)} </h3>
                         <ul>
-                            {category.value.map(l => <li className='link' key={l.title+l.id}> <Link className='link' to={'/'+regulateCategory(category.key)+'/'+l.id} > {l.title} </Link>  </li>)}
+                            {category.value.map(l => <li className='link' key={l.title+l.id}> <Link className='link' to={'/'+formatCategory(category.key)+'/'+l.id} > {l.title} </Link>  </li>)}
                         </ul>
                 </li>
             })}
