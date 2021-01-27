@@ -1,5 +1,5 @@
 import {get} from '../api/swapi.dev.server';
-import { Link, useLocation ,withRouter} from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
@@ -15,7 +15,7 @@ export const Description =  () => {
     const [dataStrings, setDataStrings] = useState([]);
     const [dataLinks, setDataLinks] = useState([]);
 
-    const [doneLoading, setDoneLoading] = useState(false);
+    const [doneLoading, setDoneLoading] = useState(false); //TODO: Hook
     const override = css`
         display: block;
         margin: 0 auto;
@@ -147,14 +147,15 @@ export const Description =  () => {
     
         <ul>
             {dataStrings.map((s) => {
-                return <li className="line" key={s.key}><h3> {formatTitle(s.key)}</h3> {s.value}</li>
+                let className = s.key === 'opening_crawl' ? 'line' : 'row_line';
+                return <li className={className} key={s.key}><h3> {formatTitle(s.key)}</h3> {s.value}</li>
             })}
              {dataLinks.map(category => {
                 return <li className="line" key={category.key}>
 
                         <h3> {formatTitle(category.key)} </h3>
                         <ul>
-                            {category.value.map(l => <li  key={l.title+l.id}> <Link to={'/'+regulateCategory(category.key)+'/'+l.id} > {l.title} </Link>  </li>)}
+                            {category.value.map(l => <li className='link' key={l.title+l.id}> <Link to={'/'+regulateCategory(category.key)+'/'+l.id} > {l.title} </Link>  </li>)}
                         </ul>
                 </li>
             })}
