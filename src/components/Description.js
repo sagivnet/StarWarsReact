@@ -35,6 +35,7 @@ export const Description =  () => {
 
     useEffect(() => {
         let mounted = true;
+        const isMounted = () => mounted;
         // state cleanup
         setData({});
         setDataStrings([]);
@@ -42,7 +43,7 @@ export const Description =  () => {
         setDoneLoading(false);
         
         get(url).then(res => {
-            if(!mounted) return;
+            if(!isMounted) return;
             const results = res.data;
             let strings = [];
             let links = [];
@@ -61,9 +62,11 @@ export const Description =  () => {
               let arr = [];
 
               for (let i=0; i< value.length; i++){
+                  
                   const link = value[i];
                    // get link info
                     get(link).then(result => {
+                        if(!isMounted) return;
                         let url = result.data.url;
                         url = url.substring(0,url.lastIndexOf('/'))
                         let id = url.substring(url.lastIndexOf('/')+1);
@@ -128,7 +131,7 @@ export const Description =  () => {
             mounted = false;
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [useLocation()])
 
    
     const formatTitle = title => {
