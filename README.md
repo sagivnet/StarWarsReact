@@ -14,7 +14,7 @@ $ git clone https://github.com/sagivnet/StarWarsReact
 ### Setup
 
 ```shell
-$ cd StarWars
+$ cd StarWarsReact
 $ npm install
 ```
 
