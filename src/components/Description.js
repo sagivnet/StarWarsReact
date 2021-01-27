@@ -128,7 +128,7 @@ export const Description =  () => {
             mounted = false;
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [useLocation()])
+    }, [])
 
    
     const formatTitle = title => {
